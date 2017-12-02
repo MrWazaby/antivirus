@@ -4,7 +4,7 @@
 
 ### Python
 Python 2.7 is needed.  
-### Yaya
+### Yara
 `pip install yara-python`
 
 ## Configuration
