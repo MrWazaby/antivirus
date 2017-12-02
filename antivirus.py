@@ -45,12 +45,21 @@ print("Download and extraction complete !\n\n")
 
 # Correct index files for Windows
 if(config.windows):
-	print("Upgrade index for Windows, please wait...")
+	print("Upgrade index for Windows, please wait...\n")
 	antivilib.windowsCorrect("viralBase/rules-master/index.yar")
 	print("Upgrade complete !\n\n")
 
 # Run yara to scan target folder
-print("Check files from the target folder, please wait...")
+print("====== SCAN WITH THE CUSTOM RULES DATABASE ======\n")
+rule = yara.compile(config.customRules)
+for root, dirs, files in os.walk(sys.argv[1]):
+    for name in files:
+        print("Checking " + os.path.join(root, name))
+        matches = rule.match(os.path.join(root, name))
+        print(matches)
+print("End of files checking")
+print("====== SCAN WITH THE REMOTE RULES DATABASE ======\n")
+print("Check files from the target folder, please wait...\n")
 rule = yara.compile("viralBase/rules-master/index.yar")
 for root, dirs, files in os.walk(sys.argv[1]):
     for name in files:
